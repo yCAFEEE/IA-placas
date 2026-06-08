@@ -2,7 +2,7 @@ path: /content/dataset
 train: images/train
 val: images/val
 
-nc: 84
+nc: 85
 
 names:
   0: R-1
@@ -19,7 +19,7 @@ names:
   11: R-8a
   12: R-8b
   13: R-10
-  14: R-19
+  14: R-19_80
   15: R-23
   16: R-24a
   17: R-24b
@@ -89,3 +89,4 @@ names:
   81: A-42b
   82: A-42c
   83: A-45
+  84: R-19_50

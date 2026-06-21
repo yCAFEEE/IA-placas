@@ -57,6 +57,7 @@ def controlador_frases():    # Thread dedicada para fala
             engine = pyttsx3.init()
             voices = engine.getProperty('voices')
 
+            voz_encontrada = False
             for voice in voices:
                 if "MARIA" in voice.id.upper():     # Tipo de voz usada pelo pyttsx3
                     engine.setProperty('voice', voice.id)

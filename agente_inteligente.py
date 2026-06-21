@@ -4,9 +4,10 @@ import pyttsx3
 import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
+import threading
+import queue
+import time
 
-# Inicializa a ferramenta que converte texto para voz
-engine = pyttsx3.init()
 
 # Criando dicionário para relacionar o código da placa com seu significado
 
@@ -36,11 +37,47 @@ significados_placas = {
     'A-35': 'Animais selvagens.'
 }
 
-# Carrega o arquvi best.pt do modelo treinado
+# Carrega o arquivo best.pt do modelo treinado
 
 model = YOLO("best.pt")
 
 # Função para a criação de fala
+
+fila_frases = queue.Queue(maxsize = 5)   # Fila que conterá as frases
+
+def controlador_frases():    # Thread dedicada para fala
+    while True:
+        texto = fila_frases.get()
+
+        if texto is None:
+            fila_frases.task_done()
+            break
+
+        try:
+            engine = pyttsx3.init()
+            voices = engine.getProperty('voices')
+
+            for voice in voices:
+                if "MARIA" in voice.id.upper():     # Tipo de voz usada pelo pyttsx3
+                    engine.setProperty('voice', voice.id)
+                    break
+
+            engine.setProperty('rate', 180)
+
+            engine.say(texto)
+            engine.runAndWait()
+
+            engine.stop()
+
+            del engine
+        
+        except Exception as e:
+            print("Erro ao reproduzir fala: ", e)
+
+        fila_frases.task_done()
+
+thread_frases = threading.Thread(target = controlador_frases, daemon = True)     # Inicializando a thread de frases
+thread_frases.start()
 
 
 # Criação de menu visual
@@ -64,16 +101,14 @@ if resposta:
         exit()
 
     caminho_foto = os.path.abspath(caminho_foto)
-    results = model.predict(source = str(caminho_foto), conf = 0.4)
+    results = model.predict(source = str(caminho_foto), conf = 0.6)
 
     for result in results:
         frame_placa = result.plot()
 
-        cv2.namedWindow(
-            "Analisando foto", cv2.WINDOW_NORMAL)
+        cv2.namedWindow("Analisando foto", cv2.WINDOW_NORMAL)
 
-        cv2.resizeWindow(
-            "Analisando foto", 1200, 800)
+        cv2.resizeWindow("Analisando foto", 800, 600)
 
         cv2.imshow("Analisando foto", frame_placa)
 
@@ -96,20 +131,31 @@ if resposta:
                 frases.append(significado)
 
         if frases:
-            texto = ", ".join(frases)   #CONTINUAR DAQUI
+            texto = ", ".join(frases)
+            if not fila_frases.full():
+                fila_frases.put(texto)
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 # SE A ESCOLHA FOI VÍDEO
 else:
-    caminho_video = anexar_arquivo("video")
+    formatos = [("Vídeos", "*.mp4 *.avi *.mkv *.mov")]
+    caminho_video = filedialog.askopenfilename(title = "Selecione o Vídeo", filetypes = formatos)
 
     if not caminho_video:
         print("Nenhum arquivo selecionado")
         exit()
 
+    caminho_video = os.path.abspath(caminho_video)
     captura = cv2.VideoCapture(caminho_video)
+
+    cv2.namedWindow("Analisando video", cv2.WINDOW_NORMAL)
+
+    cv2.resizeWindow("Analisando video", 800, 600)
+
+    placas_vistas = {}   # Armazena placas vistas recentemente para a ordem de fala
+
     print("Processando vídeo. Para sair, pressione 'q'")
 
     while captura.isOpened():
@@ -117,13 +163,17 @@ else:
         
         if not possivel:
             break
+        
+        tempo_atual = time.time()
 
-        results = model.predict(source = frame_video, conf = 0.4, stream = True)
+        results = model.predict(source = frame_video, conf = 0.6, stream = True)
 
         for result in results:
             frame_placa = result.plot()
 
             caixas = result.boxes
+            frases_frame = []
+
             for caixa in caixas:
                 id_classe = int(caixa.cls[0])
                 nome_classe = model.names[id_classe]
@@ -131,15 +181,30 @@ else:
                 if nome_classe in significados_placas:
                     significado = significados_placas[nome_classe]
 
-                    print(f"Detectada placa {nome_classe}: {significado}")
+                    tempo_anterior = placas_vistas.get(nome_classe, 0)
 
-                    engine.say(significado)
-                    engine.runAndWait()
+                    if tempo_atual - tempo_anterior > 4.0:
+                        print(f"Detectada placa {nome_classe}: {significado}")
+
+                        frases_frame.append(significado)
+                        placas_vistas[nome_classe] = tempo_atual
+
+            if frases_frame:
+                texto = ", ".join(frases_frame)
+                if not fila_frases.full():
+                    fila_frases.put(texto)
         
-        cv2.imshow("Analisando vídeo", frame_placa)
+        cv2.imshow("Analisando video", frame_placa)
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
+
+    fila_frases.put(None)
+
+    try:
+        fila_frases.join()
+    except:
+        pass
 
     captura.release()
     cv2.destroyAllWindows()

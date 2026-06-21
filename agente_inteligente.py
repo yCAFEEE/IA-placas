@@ -60,7 +60,16 @@ def controlador_frases():    # Thread dedicada para fala
             for voice in voices:
                 if "MARIA" in voice.id.upper():     # Tipo de voz usada pelo pyttsx3
                     engine.setProperty('voice', voice.id)
+                    voz_encontrada = True
                     break
+
+            if not voz_encontrada:
+                for voice in voices:
+                    lang = [str(l).upper() for l in voice.languages] if voice.languages else []    # Checa o idioma ou o nome da voz
+                    if "PT" in lang or "BR" in lang or "PORTUGUESE" in voice.name.upper():
+                        engine.setProperty('voice', voice.id)
+                        voz_encontrada = True
+                        break
 
             engine.setProperty('rate', 180)
 

@@ -153,7 +153,7 @@ if resposta == 'imagem':
         h, w = frame_placa.shape
         target_width = min(800, w)
         target_height = int(h * target_width / w)
-        cv2.resizeWindow("Analisando foto", 800, 600)
+        cv2.resizeWindow("Analisando foto", target_width, target_height)
 
         cv2.imshow("Analisando foto", frame_placa)
 

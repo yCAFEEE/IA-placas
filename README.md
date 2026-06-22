@@ -14,7 +14,7 @@ Link para o Google Colab com códigos e detalhes sobre o treinamento: https://co
 
 ## Datasets
 ### Datasets Usados
-Nesse trabalho foi utilizado os seguites datasets prontos:
+Nesse trabalho foi utilizado os seguintes datasets prontos:
 - Dataset do GitHub: https://github.com/jean2612/Dataset-Placas-Transito
 - Dataset do Roboflow: https://universe.roboflow.com/placas-brasileiras/placas-0iqjy
 

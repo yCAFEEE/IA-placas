@@ -43,7 +43,8 @@ model = YOLO("best.pt")
 
 # Função para a criação de fala
 
-fila_frases = queue.Queue(maxsize = 5)   # Fila que conterá as frases
+fila_frases = queue.Queue(maxsize=5)   # Fila que conterá as frases
+
 
 def controlador_frases():    # Thread dedicada para fala
     while True:
@@ -66,7 +67,9 @@ def controlador_frases():    # Thread dedicada para fala
 
             if not voz_encontrada:
                 for voice in voices:
-                    lang = [str(l).upper() for l in voice.languages] if voice.languages else []    # Checa o idioma ou o nome da voz
+                    # Checa o idioma ou o nome da voz
+                    lang = [str(l).upper()
+                            for l in voice.languages] if voice.languages else []
                     if "PT" in lang or "BR" in lang or "PORTUGUESE" in voice.name.upper():
                         engine.setProperty('voice', voice.id)
                         voz_encontrada = True
@@ -80,13 +83,15 @@ def controlador_frases():    # Thread dedicada para fala
             engine.stop()
 
             del engine
-        
+
         except Exception as e:
             print("Erro ao reproduzir fala: ", e)
 
         fila_frases.task_done()
 
-thread_frases = threading.Thread(target = controlador_frases, daemon = True)     # Inicializando a thread de frases
+
+# Inicializando a thread de frases
+thread_frases = threading.Thread(target=controlador_frases, daemon=True)
 thread_frases.start()
 
 
@@ -130,14 +135,15 @@ if resposta is None:
 
 if resposta == 'imagem':
     formatos = [("Imagens", "*.jpg *.jpeg *.png *.bmp")]
-    caminho_foto = filedialog.askopenfilename(title = "Selecione a Foto", filetypes = formatos)
+    caminho_foto = filedialog.askopenfilename(
+        title="Selecione a Foto", filetypes=formatos)
 
     if not caminho_foto:
         print("Nenhum arquivo selecionado")
         exit()
 
     caminho_foto = os.path.abspath(caminho_foto)
-    results = model.predict(source = str(caminho_foto), conf = 0.6)
+    results = model.predict(source=str(caminho_foto), conf=0.6)
 
     for result in results:
         frame_placa = result.plot()
@@ -157,7 +163,7 @@ if resposta == 'imagem':
 
         if len(caixas) == 0:
             print('NENHUMA PLACA DETECTADA')
-        
+
         for caixa in caixas:
             id_classe = int(caixa.cls[0])
             nome_classe = model.names[id_classe]
@@ -179,7 +185,8 @@ if resposta == 'imagem':
 
 else:
     formatos = [("Vídeos", "*.mp4 *.avi *.mkv *.mov")]
-    caminho_video = filedialog.askopenfilename(title = "Selecione o Vídeo", filetypes = formatos)
+    caminho_video = filedialog.askopenfilename(
+        title="Selecione o Vídeo", filetypes=formatos)
 
     if not caminho_video:
         print("Nenhum arquivo selecionado")
@@ -198,13 +205,13 @@ else:
 
     while captura.isOpened():
         possivel, frame_video = captura.read()
-        
+
         if not possivel:
             break
-        
+
         tempo_atual = time.time()
 
-        results = model.predict(source = frame_video, conf = 0.6, stream = True)
+        results = model.predict(source=frame_video, conf=0.6, stream=True)
 
         for result in results:
             frame_placa = result.plot()
@@ -231,7 +238,7 @@ else:
                 texto = ", ".join(frases_frame)
                 if not fila_frases.full():
                     fila_frases.put(texto)
-        
+
         cv2.imshow("Analisando video", frame_placa)
 
         if cv2.waitKey(1) & 0xFF == ord("q"):

@@ -1,6 +1,0 @@
-ultralytics
-opencv-python
-pyttsx3
-tkinter
-libgl1-mesa-glx (para Linux)
-python3-tk (para Linux)

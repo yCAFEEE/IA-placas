@@ -95,14 +95,40 @@ thread_frases.start()
 root = tk.Tk()
 root.withdraw()
 
-resposta = messagebox.askyesnocancel("DETECÇÃO DE PLACAS DE TRÂNSITO BRASILEIRAS", "Clique em SIM para foto ou NÃO para vídeo")
+dialog = tk.Toplevel(root)
+dialog.geometry('500x100')
+dialog.title("DETECÇÃO DE PLACAS DE TRÂNSITO BRASILEIRAS")
+dialog.resizable(False, False)
+dialog.grab_set()
+
+tk.Label(dialog, text='Selecione o tipo de entrada.', pady=10, padx=20).pack()
+
+btn_frame = tk.Frame(dialog, pady=10)
+btn_frame.pack()
+
+resposta = None
+
+
+def pick_value(value):
+    global dialog, resposta
+
+    resposta = value
+    dialog.destroy()
+
+
+tk.Button(btn_frame, text="🎬 Vídeo", width=10,
+          command=lambda: pick_value("video")).pack(side="left", padx=8)
+tk.Button(btn_frame, text="🖼️ Imagem", width=10,
+          command=lambda: pick_value("imagem")).pack(side="right", padx=8)
+
+dialog.protocol("WM_DELETE_WINDOW", lambda: pick_value(None))
+root.wait_window(dialog)
 
 if resposta is None:
     print("Encerrando....")
     exit()
 
-# SE A ESCOLHA FOI FOTO
-if resposta:
+if resposta == 'imagem':
     formatos = [("Imagens", "*.jpg *.jpeg *.png *.bmp")]
     caminho_foto = filedialog.askopenfilename(title = "Selecione a Foto", filetypes = formatos)
 
@@ -148,7 +174,6 @@ if resposta:
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-# SE A ESCOLHA FOI VÍDEO
 else:
     formatos = [("Vídeos", "*.mp4 *.avi *.mkv *.mov")]
     caminho_video = filedialog.askopenfilename(title = "Selecione o Vídeo", filetypes = formatos)

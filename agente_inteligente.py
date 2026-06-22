@@ -197,7 +197,10 @@ else:
 
     cv2.namedWindow("Analisando video", cv2.WINDOW_NORMAL)
 
-    cv2.resizeWindow("Analisando video", 800, 600)
+    h, w = frame_placa.shape
+    target_width = min(800, w)
+    target_height = int(h * target_width / w)
+    cv2.resizeWindow("Analisando video", target_width, target_height)
 
     placas_vistas = {}   # Armazena placas vistas recentemente para a ordem de fala
 

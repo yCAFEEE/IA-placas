@@ -1,95 +1,13 @@
-path: /content/dataset
-train: images/train
-val: images/val
+train: ../train/images
+val: ../valid/images
+test: ../test/images
 
-nc: 88
+nc: 23
+names: ['A-12', 'A-13a', 'A-14', 'A-18', 'A-1a', 'A-1b', 'A-25', 'A-27', 'A-2a', 'A-2b', 'A-32a', 'A-32b', 'A-35', 'R-1', 'R-14b', 'R-19', 'R-2', 'R-24a', 'R-33', 'R-6a', 'R-6b', 'R-6c', 'R-7']
 
-names:
-  0: R-1
-  1: R-2
-  2: R-3
-  3: R-4a
-  4: R-4b
-  5: R-5a
-  6: R-5b
-  7: R-6a
-  8: R-6b
-  9: R-6c
-  10: R-7
-  11: R-8a
-  12: R-8b
-  13: R-10
-  14: R-19_80
-  15: R-23
-  16: R-24a
-  17: R-24b
-  18: R-25a
-  19: R-25b
-  20: R-25c
-  21: R-25d
-  22: R-26
-  23: R-28
-  24: R-32
-  25: R-33
-  26: R-34
-  27: R-39
-  28: A-1a
-  29: A-1b
-  30: A-2a
-  31: A-2b
-  32: A-3a
-  33: A-3b
-  34: A-4a
-  35: A-4b
-  36: A-5a
-  37: A-5b
-  38: A-6
-  39: A-7a
-  40: A-7b
-  41: A-8
-  42: A-9
-  43: A-10a
-  44: A-10b
-  45: A-11a
-  46: A-11b
-  47: A-12
-  48: A-13a
-  49: A-13b
-  50: A-14
-  51: A-15
-  52: A-17
-  53: A-18
-  54: A-19
-  55: A-20a
-  56: A-20b
-  57: A-21a
-  58: A-21b
-  59: A-21c
-  60: A-21d
-  61: A-21e
-  62: A-24
-  63: A-25
-  64: A-26a
-  65: A-26b
-  66: A-27
-  67: A-28
-  68: A-30a
-  69: A-30b
-  70: A-32a
-  71: A-32b
-  72: A-33a
-  73: A-33b
-  74: A-34
-  75: A-35
-  76: A-36
-  77: A-39
-  78: A-40
-  79: A-41
-  80: A-42a
-  81: A-42b
-  82: A-42c
-  83: A-45
-  84: R-19_50
-  85: R-19_60
-  86: R-19_30
-  87: R-19_40
+roboflow:
+  workspace: luma-bergmann
+  project: ic_dataset2
+  version: 4
+  license: MIT
+  url: https://universe.roboflow.com/luma-bergmann/ic_dataset2/dataset/4

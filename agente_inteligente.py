@@ -197,7 +197,8 @@ else:
 
     cv2.namedWindow("Analisando video", cv2.WINDOW_NORMAL)
 
-    h, w = captura.get(cv2.CAP_PROP_FRAME_WIDTH), captura.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    h, w = captura.get(cv2.CAP_PROP_FRAME_HEIGHT), captura.get(
+        cv2.CAP_PROP_FRAME_WIDTH)
     target_width = min(800, w)
     target_height = int(h * target_width / w)
     cv2.resizeWindow("Analisando video", target_width, target_height)

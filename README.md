@@ -39,4 +39,33 @@ Ao executar o arquivo `agente_inteligente.py` é exibido uma caixa com as seguin
 - **"Não" (vídeo):** é solicitado o envio de um vídeo ao usuário;
 - **"Cancelar":** encerra o programa.
 
-Nas funções de imagem e vídeo, caso haja seja reconhecido de uma placa, é usado *Text-to-Speech* (conversão de texto para fala) para ditar o que a placa representa.
+Nas funções de imagem e vídeo, caso seja reconhecido de uma placa, é usado *Text-to-Speech* (conversão de texto para fala) para ditar o que a placa representa.
+
+## Placas
+Ao todo, a IA é capaz de reconhecer 23 tipos de placas diferentes, sendo elas:
+### Placas de regulamentação
+- **R-1**: Parada obrigatória
+- **R-2**: Dê a preferência
+- **R-6a**: Proibido estacionar
+- **R-6b**: Estacionamento regulamentado
+- **R-6c**: Proibido parar e estacionar
+- **R-7**: Proibido ultrapassar
+- **R-19**: Velocidade máxima permitida
+- **R-24a**: Sentido de circulação de via/pista
+- **R-24b**: Passagem obrigatória
+- **R-33**: Sentido de circulação na rotatória
+
+### Placas de advertência
+- **A-1a**: Curva acentuada à esquerda
+- **A-1b**: Curva acentuada à direita
+- **A-2a**: Curva à esquerda
+- **A-2b**: Curva à direita
+- **A-12**: Interseção em círculo
+- **A-13a**: Confluência à esquerda
+- **A-14**: Semáforo à frente
+- **A-18**: Saliência ou lombada
+- **A-25**: Mão dupla adiante
+- **A-27**: Área com desmoronamento
+- **A-32a**: Trânsito de pedestres
+- **A-32b**: Passagem sinalizada de pedestres
+- **A-35**: Animais

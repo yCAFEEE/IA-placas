@@ -19,8 +19,18 @@ Nesse trabalho foi utilizado os seguintes datasets prontos:
 - Dataset do Roboflow: https://universe.roboflow.com/placas-brasileiras/placas-0iqjy
 
 O dataset final que foi usado para treinar a inteligência artificial possui 3763 imagens e está no formato usado pelo YOLOv8. \
-O nosso dataset final está disponível em: https://universe.roboflow.com/luma-bergmann/ic_dataset2
+A divisão dessas imagens se deu da seguinte forma:
 
+> **`test` — 407 imagens** (aprox. 11% do dataset) \
+> Imagens separadas apenas para teste.
+
+> **`train` — 2695 imagens** (aprox. 72% do dataset) \
+> Imagens usadas para treinar a IA.
+
+> **`valid` — 661 imagens** (aprox. 18% do dataset) \
+> Imagens usadas pela IA para validar o treinamento. 
+
+O nosso dataset final está disponível em: https://universe.roboflow.com/luma-bergmann/ic_dataset2
 ## Ferramentas para usar o Agente Inteligente
 Para executar o agente inteligente do arquivo `agente_inteligente.py` é necessário a instalação dos seguintes pacotes:
 ```

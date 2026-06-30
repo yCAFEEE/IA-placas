@@ -44,10 +44,9 @@ python3-tk (para Linux)
 
 ## Agente Inteligente
 Nesse projeto foi implmentado um agente inteligente para ter um retorno após o reconhecimento de uma placa. \
-Ao executar o arquivo `agente_inteligente.py` é exibido uma caixa com as seguintes três opções:
-- **"Sim" (imagem):** é solicitado o envio de uma imagem ao usuário;
-- **"Não" (vídeo):** é solicitado o envio de um vídeo ao usuário;
-- **"Cancelar":** encerra o programa.
+Ao executar o arquivo `agente_inteligente.py` é exibido uma caixa com as seguintes opções:
+- **Imagem:** é solicitado o envio de uma imagem ao usuário;
+- **Vídeo:** é solicitado o envio de um vídeo ao usuário;
 
 Nas funções de imagem e vídeo, caso seja reconhecido de uma placa, é usado *Text-to-Speech* (conversão de texto para fala) para ditar o que a placa representa.
 

@@ -11,6 +11,7 @@ O objetivo desse trabalho é treinar um modelo de Inteligência Artificial capaz
 A Inteligência Artificial foi treinada usando o YOLOv8 no modelo Small e o dataset utilizado é proveniente do GitHub e do Roboflow.
 
 Link para o Google Colab com códigos e detalhes sobre o treinamento: https://colab.research.google.com/drive/1eLLzWHIWbaGtdoQbOKnJLypjfExzhhG9
+Link para os slides com explicações teóricas e imagens de resultados: https://docs.google.com/presentation/d/18loXNxxkLcGtar2KUac5aWu3FZKY1fq8jy7UDrrPupo/edit?usp=sharing
 
 ## Datasets
 ### Datasets Usados

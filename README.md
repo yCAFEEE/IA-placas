@@ -30,6 +30,13 @@ A divisão dessas imagens se deu da seguinte forma:
 > **`valid` — 661 imagens** (aprox. 18% do dataset) \
 > Imagens usadas pela IA para validar o treinamento. 
 
+Cada imagem possui uma label (em formato de texto) correspondente que tem a estrutura:
+| Classe da placa | Coordenada x | Coordenada y | Largura | Altura |
+| --- | --- | --- | --- | --- |
+- **Classe da placa:** Número associado ao código real da placa presente no arquivo `data.yaml`.
+- **Coordenadas e dimensões:** Valores que delimitam a *bounding box*, indicando onde a placa está localizada na imagem. 
+- **Exemplo:** 22 0.2934 0.5740 0.02968 0.0425
+
 O nosso dataset final está disponível em: https://universe.roboflow.com/luma-bergmann/ic_dataset2
 ## Ferramentas para usar o Agente Inteligente
 Para executar o agente inteligente do arquivo `agente_inteligente.py` é necessário a instalação dos seguintes pacotes:
